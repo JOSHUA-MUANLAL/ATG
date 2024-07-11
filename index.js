@@ -216,6 +216,16 @@ try{
     res.status(404).json({error})
 }
 
+
+app.get('/getuserdata',async(req,res)=>{
+    try{
+        
+
+    }catch(error){
+        res.status(404).json({message:error})
+    }
+})
+
 app.listen(8080, () => {
     console.log('Server is running on http://localhost:8080');
   })
