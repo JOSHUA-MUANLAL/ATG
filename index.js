@@ -6,7 +6,7 @@ const jwt=require('jsonwebtoken')
 const authentication=require('./middleware/authentication')
 const cors=require('cors')
 const secretKey = 'joshua';
-const bcrypt=require('bcrypt')
+const bcrypt=require('bcryptjs')
 const {UserData}=require('./model/schema')
 
 
