@@ -8,6 +8,8 @@ const cors=require('cors')
 const secretKey = 'joshua';
 const bcrypt=require('bcrypt')
 const {UserData}=require('./model/schema')
+
+
 app.use(bodyParser.json())
 app.use(express.static('public'));
 app.use(express.json());
