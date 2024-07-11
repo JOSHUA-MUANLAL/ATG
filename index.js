@@ -3,7 +3,7 @@ const express=require('express')
 const app=express()
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
-const authentication=require('../middleware/authentication')
+const authentication=require('./middleware/authentication')
 const cors=require('cors')
 const secretKey = 'joshua';
 const bcrypt=require('bcrypt')
@@ -27,6 +27,7 @@ try{
             const password=req.body.password;
             const name=req.body.name
             const number=req.body.number;
+            const address=req.body.address;
 
             console.log(password)
             
@@ -42,8 +43,9 @@ try{
                 const user=new UserData({
                     user_email:email,
                     user_eame: name,
-                    user_phone:number,
+                    user_number:number,
                     password:hashedPassword,
+                    address:address
                 
                 })
     

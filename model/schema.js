@@ -8,7 +8,8 @@ try{
        password:String,
        user_number:Number,
        resetotp: String,
-       resettime: Date
+       resettime: Date,
+       address:String
        
       
       });
