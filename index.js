@@ -3,6 +3,7 @@ const express=require('express')
 const app=express()
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
+const authentication=require('../middleware/authentication')
 const cors=require('cors')
 const secretKey = 'joshua';
 const bcrypt=require('bcrypt')
@@ -217,9 +218,18 @@ try{
 }
 
 
-app.get('/getuserdata',async(req,res)=>{
+app.get('/getuserdata',authentication,async(req,res)=>{
     try{
-        
+        let email=req.userdetail.email;
+
+        const result=await UserData.findOne({user_email:email})
+
+        if(!result){
+            res.status(404).json({message:"failed to get data"})
+        }
+
+        res.status(202).json({result})
+
 
     }catch(error){
         res.status(404).json({message:error})
