@@ -20,7 +20,34 @@ const res = require('express/lib/response')
 
 try{
     app.get("/",(req,res)=>{
-        res.send("<h>hello</h>")
+        res.send(`
+            <style>
+            u{
+            color:blue
+            }
+            </style><center><h1>ASSESMENT</h1></center><br>
+            <h2><b>Note:-</b></h2>
+            <h3><ul><li>User are request to use postman as shown in video</li>
+            <li>Link for the video:- <a href='https://drive.google.com/file/d/1STNLcWuaqbqwbjmLh1mBWfAH5EeAkPyU/view?usp=sharing'>Link</a></li>
+            <li>Since it is deployed on free instance(Render.io) it might take 60sec to get active </li>
+            <li>Tech used
+            <ol>
+            <li>Node js(Express.js) for Framework</li>
+            <li>Mongodb atlas for Database</li>
+            <li>Nodemailer for mail service</li>
+            <li>JWT for token</li>
+            <li>bcrypt for encryption</li>
+            <li>Render.io to deploy and host</li>
+            
+            </ol></li>
+            <li>Process:-
+            <ol><li>(POST) <u>/userregister</u> for register with input name,email,number,address,password (key names should be as mentioned)</li>
+            <li>(POST) <u>/login</u> for login in with input email and password and if success it will generate a token </li> 
+            <li>(GET) <u>/getuserdata</u> for Userdetail in with input email and token on the headers key name- authorization</li> 
+            <li>(POST) <u>/forgotpassword</u> for forgot password in with input email and it will send an otp for password in your registered email </li> 
+            <li>(POST) <u>/resetpassword</u> for password reset with email , otp and newpassword</li> 
+            </li></ul></h3>
+            `)
     })
     
     app.post('/userregister',async(req,res)=>{
