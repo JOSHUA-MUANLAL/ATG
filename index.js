@@ -8,6 +8,7 @@ const cors=require('cors')
 const secretKey = 'joshua';
 const bcrypt=require('bcryptjs')
 const {UserData}=require('./model/schema')
+const {PostData}=require('./model/post')
 
 
 app.use(bodyParser.json())
@@ -217,6 +218,7 @@ try{
                 console.log(passwordcompare)
     
                 const userPayload={
+                    id: result._id,
                     name:result.user_name,
                     email:result.user_email
                 }
@@ -266,6 +268,155 @@ app.get('/getuserdata',authentication,async(req,res)=>{
         res.status(404).json({message:error})
     }
 })
+
+
+
+app.post('/post',authentication, async(req,res)=>{
+    try{
+        const content = req.body.post;
+        const user = req.userdetail.id;
+
+        const post = new PostData({
+            content,
+            user
+        });
+
+        await post.save();
+        res.status(201).json({ message: 'Post created successfully', post });
+
+
+
+    }catch(error){
+        res.status(404).json({message:error})
+    }
+})
+
+
+app.get('/posts', async (req, res) => {
+    try {
+        const posts = await PostData.find().populate('user', 'user_name user_email').populate('comments.user', 'user_name user_email');
+        if(!posts){
+            res.json({message:"NO post available"})
+        }
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+app.get('/posts/:id', async (req, res) => {
+    try {
+        const post = await PostData.findById(req.params.id).populate('user', 'user_name user_email').populate('comments.user', 'user_name user_email');
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+//for updatingpost
+app.put('/post/update', authentication, async (req, res) => {
+    try {
+        const content = req.body.post;
+        const post = await PostData.findById(req.body.postid);
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        if (post.user.toString() !== req.userdetail.id) {
+            return res.status(403).json({ message: 'Unauthorized action' });
+        }
+
+        post.content = content;
+        await post.save();
+        res.status(200).json({ message: 'Post updated successfully', post });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+ // for deleting post
+app.delete('/post/delete', authentication, async (req, res) => {
+    try {
+        
+        const post = await PostData.findById(req.body.postid);
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        if (post.user.toString() !== req.userdetail.id) {
+            return res.status(403).json({ message: 'Unauthorized action' });
+        }
+
+        await PostData.findByIdAndDelete(req.body.postid);
+        res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+})
+
+app.post('/post/like', authentication, async (req, res) => {
+    try {
+        const post = await PostData.findById(req.body.postid);
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        if (post.likes.includes(req.userdetail.id)) {
+            return res.status(400).json({ message: 'You already liked this post' });
+        }
+
+        post.likes.push(req.userdetail.id);
+        await post.save();
+        res.status(200).json({ message: 'Post liked successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+app.post('/post/comment', authentication, async (req, res) => {
+    try {
+        const comment = req.body.comment;
+        const post = await PostData.findById(req.body.postid);
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        post.comments.push({ user: req.userdetail.id, comment });
+        await post.save();
+
+        if(req.userdetail.id!=post.user){
+
+            let postuser= await UserData.findById(post.user)
+            let mailOptions={
+                from:{
+                    name:'Joshua',
+                    address:'joshua00521202021@msijanakpuri.com'
+                },
+                to:postuser.user_email,
+                subject:'Comment',
+                text:'Comment',
+                html:`<b>Dear User ${postuser.user_email}<br> ${req.userdetail.name} has commented on your post</b>: <br><u> ${post.content}</u> `
+                      }
+                sendmail(mailOptions)
+
+        }
+
+
+
+
+
+
+        res.status(200).json({ message: 'Comment added successfully', comments: post.comments });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
 app.listen(8080, () => {
     console.log('Server is running on http://localhost:8080');

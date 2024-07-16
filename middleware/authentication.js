@@ -6,7 +6,7 @@ const authMiddleware = (req, res, next) => {
 
   if (!token) {
     console.log("NO token")
-    return res.status(403).json({ error: 'no token token' });
+    return res.status(403).json({ error: 'no token' });
   }
 
   try {

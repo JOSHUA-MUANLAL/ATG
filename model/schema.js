@@ -9,7 +9,8 @@ try{
        user_number:Number,
        resetotp: String,
        resettime: Date,
-       address:String
+       address:String,
+       posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
        
       
       });
