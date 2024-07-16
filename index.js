@@ -26,7 +26,11 @@ try{
             u{
             color:blue
             }
-            </style><center><h1>ASSESMENT</h1></center><br>
+
+            body{
+            background-color:black;
+            color:white}
+            </style><center><h1>ASSESMENT 1</h1></center><br>
             <h2><b>Note:-</b></h2>
             <h3><ul><li>User are request to use postman as shown in video</li>
             <li>Link for the video:- <a href='https://drive.google.com/file/d/1STNLcWuaqbqwbjmLh1mBWfAH5EeAkPyU/view?usp=sharing'>Link</a></li>
