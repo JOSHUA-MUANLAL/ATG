@@ -65,7 +65,7 @@ try{
              <li>(PUT) <u>/post/update</u> For making update on POST , with input new post , old postId and Token of User who made the post on the headers Authorization</li>
              <li>(DELETE) <u>/post/delete</u> For Deleting the POST ,with input PostId and the Logged in user token on Headers Authorization</li>
              <li>(POST) <u>/post/commet</u> For making Comment on a Post , input the PostID and Comment (From another account or by another profile)</li>
-             <li>(POST) <u>/post/like</u> To Like a post , with input PostId of the post made by the users (From another account or by another profile)</li>
+             <li>(POST) <u>/post/like</u> To Like a post , with input PostId of the post made by the users (From another account or by another profile) (you cannot like a post more than once)</li>
              </ol>
              </ul>
 
