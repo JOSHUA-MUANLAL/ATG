@@ -48,6 +48,27 @@ try{
             <li>(POST) <u>/forgotpassword</u> for forgot password in with input email and it will send an otp for password in your registered email </li> 
             <li>(POST) <u>/resetpassword</u> for password reset with email , otp and newpassword</li> 
             </li></ul></h3>
+
+            </style><center><h1>ASSESMENT 2</h1></center><br>
+             <h2><b>Note:-</b></h2>
+             <h3><ul><li>Link for the video:- <a href='https://drive.google.com/file/d/1jdPo8gD4nnXrjYNSHXcbqnIAddcankUW/view?usp=sharing'>Link</a></li>
+             <li>Update version of Assesment 1 with CRUD operation for post, comment and like</li>
+             <li>Process:-
+             <ol>
+             <li>(POST) <u> /login</u> for login with email and passwsord and if success generates Token</li>
+             <li>(POST) <u>/post</u> for making a POST copy the login token and input the post and token on the headers key name Authorization</li>
+             <li>(GET) <u>/posts</u> for checking the post available</li>
+             <li>(PUT) <u>/post/update</u> For making update on POST , with input new post , old postId and Token of User who made the post on the headers Authorization</li>
+             <li>(DELETE) <u>/post/delete</u> For Deleting the POST ,with input PostId and the Logged in user token on Headers Authorization</li>
+             <li>(POST) <u>/post/commet</u> For making Comment on a Post , input the PostID and Comment (From another account or by another profile)</li>
+             <li>(POST) <u>/post/like</u> To Like a post , with input PostId of the post made by the users (From another account or by another profile)</li>
+             </ol>
+             </ul>
+
+
+
+
+
             `)
     })
     
